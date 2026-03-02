@@ -1,5 +1,6 @@
 package br.com.pedrotrudes.gestao_vagas.modules.candidate.controller;
 
+import br.com.pedrotrudes.gestao_vagas.exceptions.UserFoundException;
 import br.com.pedrotrudes.gestao_vagas.modules.candidate.CandidateEntity;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,12 @@ public class CandidateCotroller {
 
     @PostMapping("/")
     public CandidateEntity create( @Valid @RequestBody CandidateEntity candidateEntity){
+        this.candidateRepository
+                .findByUsernameOrEmail(candidateEntity.getUsername(), candidateEntity.getEmail())
+                .ifPresent((user) -> {
+                    throw new UserFoundException();
+                });
+
         return this.candidateRepository.save(candidateEntity);
     }
 }
