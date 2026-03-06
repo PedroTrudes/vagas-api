@@ -1,6 +1,7 @@
 package br.com.pedrotrudes.gestao_vagas.modules.candidate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,16 +11,23 @@ import java.util.UUID;
 public class CandidateService {
 
     private final CandidateRepository candidateRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public CandidateService(CandidateRepository candidateRepository) {
+    public CandidateService(CandidateRepository candidateRepository, PasswordEncoder passwordEncoder) {
         this.candidateRepository = candidateRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public CandidateEntity createCandidate(CandidateEntity candidate){
         var candidateExists = candidateRepository.findByEmail(candidate.getEmail());
+
         if(candidateExists.isPresent()){
             throw new RuntimeException("Candidato já existe");
         }
+
+        String encryptedPassword = passwordEncoder.encode(candidate.getPassword());
+        candidate.setPassword(encryptedPassword);
+
         return candidateRepository.save(candidate);
     }
 
