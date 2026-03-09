@@ -1,6 +1,9 @@
 package br.com.pedrotrudes.gestao_vagas.modules.candidate;
 
+import br.com.pedrotrudes.gestao_vagas.modules.candidate.dto.CandidateResponseDTO;
+import br.com.pedrotrudes.gestao_vagas.modules.candidate.mapper.CandidateMapper;
 import jakarta.websocket.server.PathParam;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +20,11 @@ public class CandidateController {
     }
 
     @PostMapping("/")
-    public CandidateEntity create(@RequestBody CandidateEntity candidate){
-        return candidateService.createCandidate(candidate);
+    public ResponseEntity<CandidateResponseDTO> create(@RequestBody CandidateEntity candidate){
+        var createdCandidate = candidateService.createCandidate(candidate);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(CandidateMapper.toDto(createdCandidate));
     }
 
     @GetMapping()
