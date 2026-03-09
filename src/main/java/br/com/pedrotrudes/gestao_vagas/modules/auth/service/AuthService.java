@@ -2,6 +2,7 @@ package br.com.pedrotrudes.gestao_vagas.modules.auth.service;
 
 import br.com.pedrotrudes.gestao_vagas.modules.auth.dto.AuthRequestDTO;
 import br.com.pedrotrudes.gestao_vagas.modules.auth.dto.AuthResponseDTO;
+import br.com.pedrotrudes.gestao_vagas.modules.auth.security.JwtService;
 import br.com.pedrotrudes.gestao_vagas.modules.candidate.repository.CandidateRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,23 +12,29 @@ public class AuthService {
 
     private final CandidateRepository candidateRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthService(CandidateRepository candidateRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(CandidateRepository candidateRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.candidateRepository = candidateRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public AuthResponseDTO login(AuthRequestDTO req){
+
         var candidate = candidateRepository.findByUsername(req.username())
                 .orElseThrow(() -> new RuntimeException("Usuario ou senha invalidos"));
-        //comparando o password da res com o password incriptado
+
+
         boolean passwordMatches = passwordEncoder.matches(req.password(), candidate.getPassword());
 
         if(!passwordMatches){
             throw new RuntimeException("Usuario ou senha invalidos");
         }
 
-        return new AuthResponseDTO("TOKEN_AQUI");
+        String token = jwtService.generateToken(candidate.getUsername());
+
+        return new AuthResponseDTO(token);
 
     }
 }
