@@ -1,4 +1,4 @@
-package br.com.pedrotrudes.gestao_vagas.modules.candidate;
+package br.com.pedrotrudes.gestao_vagas.modules.candidate.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

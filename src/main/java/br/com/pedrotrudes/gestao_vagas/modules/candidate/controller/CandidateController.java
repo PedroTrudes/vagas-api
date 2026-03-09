@@ -1,8 +1,9 @@
-package br.com.pedrotrudes.gestao_vagas.modules.candidate;
+package br.com.pedrotrudes.gestao_vagas.modules.candidate.controller;
 
+import br.com.pedrotrudes.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import br.com.pedrotrudes.gestao_vagas.modules.candidate.dto.CandidateResponseDTO;
 import br.com.pedrotrudes.gestao_vagas.modules.candidate.mapper.CandidateMapper;
-import jakarta.websocket.server.PathParam;
+import br.com.pedrotrudes.gestao_vagas.modules.candidate.service.CandidateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

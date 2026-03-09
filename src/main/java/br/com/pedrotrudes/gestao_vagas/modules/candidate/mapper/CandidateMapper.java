@@ -1,6 +1,6 @@
 package br.com.pedrotrudes.gestao_vagas.modules.candidate.mapper;
 
-import br.com.pedrotrudes.gestao_vagas.modules.candidate.CandidateEntity;
+import br.com.pedrotrudes.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import br.com.pedrotrudes.gestao_vagas.modules.candidate.dto.CandidateResponseDTO;
 
 public class CandidateMapper {

@@ -1,6 +1,7 @@
-package br.com.pedrotrudes.gestao_vagas.modules.candidate;
+package br.com.pedrotrudes.gestao_vagas.modules.candidate.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.pedrotrudes.gestao_vagas.modules.candidate.entity.CandidateEntity;
+import br.com.pedrotrudes.gestao_vagas.modules.candidate.repository.CandidateRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
